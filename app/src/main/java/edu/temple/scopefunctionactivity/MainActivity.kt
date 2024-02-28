@@ -13,22 +13,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Test the helper functions and print their output to LogCat
-        Log.d("Function output", getTestDataArray().toString())
-        Log.d("Function output", averageLessThanMedian(listOf(1.0, 2.0, 3.0, 4.0, 5.0)).toString())
 
-        val position = 2
-        val recycledView: View? = null // or some recycled view if available
-        val collection = listOf(10, 20, 30, 40, 50)
-        val context: Context = applicationContext // or any valid context
+        // Get test data array
+        val testDataArray = getTestDataArray()
+        println("Test Data Array: $testDataArray")
 
-        val view = getView(position, recycledView, collection, context)
-        Log.d("Function output", view.toString())
+        // Test averageLessThanMedian method
+        val result = averageLessThanMedian(testDataArray.map { it.toDouble() })
+        println("Is Average Less Than Median: $result")
 
-        // You can test your helper functions by  calling them from onCreate() and
-        // printing their output to the Log, which is visible in the LogCat:
-        // eg. Log.d("function output", getTestDataArray().toString())
+        val collection = listOf(1, 2, 3, 4, 5)
+        val context: Context = this
+
+        // Test recycledView is null
+        val view1 = getView(2, null, collection, context)
+        println("View 1: $view1")
+
+        // Test recycledView is a TextView
+        val recycledTextView = TextView(context)
+        val view2 = getView(3, recycledTextView, collection, context)
+        println("View 2: $view2")
     }
+    }
+
 
 
     /* Convert all the helper functions below to Single-Expression Functions using Scope Functions */
@@ -47,7 +54,6 @@ class MainActivity : AppCompatActivity() {
             listOfNumbers.sorted().let { sortedList ->
                 if (sortedList.size % 2 == 0)
                     (sortedList[sortedList.size / 2] + sortedList[(sortedList.size - 1) / 2]) / 2
-                else
                     sortedList[sortedList.size / 2]
             }.let { median -> avg < median }
         }
@@ -60,4 +66,4 @@ class MainActivity : AppCompatActivity() {
             text = collection[position].toString()
         }
 
-}
+
